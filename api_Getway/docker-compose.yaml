@@ -1,0 +1,21 @@
+version: '3.9'
+
+services:
+  # API Gateway
+  api-gateway:
+    container_name: api-gateway-cont
+    build: .
+    ports:
+      - "8000:8000"
+    networks:
+      - GLhost
+
+# Docker Networks
+networks:
+  GLhost:
+      external: true
+      name: global-network
+
+# Docker Volumes
+volumes:
+  db:

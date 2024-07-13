@@ -1,0 +1,1725 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "API for managing Library Management System resources",
+        "title": "Library Management System API",
+        "contact": {},
+        "version": "1.0"
+    },
+    "basePath": "/",
+    "paths": {
+        "/api/authors/": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Retrieve a list of all authors",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Authors"
+                ],
+                "summary": "Get all authors",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Author Name",
+                        "name": "name",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Author Biography",
+                        "name": "biography",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/authors.GetAuthorsResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Add a new author to the library system",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Authors"
+                ],
+                "summary": "Create a new author",
+                "parameters": [
+                    {
+                        "description": "Author Data",
+                        "name": "author",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/authors.CreateAuthorRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/authors.CreateAuthorResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid Data",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/authors/{id}": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Retrieve details of an author by their ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Authors"
+                ],
+                "summary": "Get author by ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Author ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/authors.GetAuthorByIdResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid Author ID",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "404": {
+                        "description": "Author Not Found",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Update details of an existing author by their ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Authors"
+                ],
+                "summary": "Update author by ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Author ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Author Data",
+                        "name": "author",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/authors.UpdateAuthorRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/authors.UpdateAuthorResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid Author ID",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "404": {
+                        "description": "Author Not Found",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Remove an author from the library system by their ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Authors"
+                ],
+                "summary": "Delete author by ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Author ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Author deleted successfully",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid Author ID",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "404": {
+                        "description": "Author Not Found",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/books/": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Retrieve a list of all books",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Books"
+                ],
+                "summary": "Get all books",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Book title",
+                        "name": "title",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Book author_id",
+                        "name": "author_id",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Book genre_id",
+                        "name": "genre_id",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Book summary",
+                        "name": "summary",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/books.GetBooksResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Add a new book to the library system",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Books"
+                ],
+                "summary": "Create a new book",
+                "parameters": [
+                    {
+                        "description": "Book Data",
+                        "name": "book",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/books.CreateBookRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/books.CreateBookResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid Data",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/books/authors/{author_id}/books": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Retrieve a list of books by a specific author",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Books"
+                ],
+                "summary": "Get books by author ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Author ID",
+                        "name": "author_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/books.GetBooksResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid Author ID",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "404": {
+                        "description": "Books Not Found",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/books/genres/{genre_id}/books": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Retrieve a list of books by a specific genre",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Books"
+                ],
+                "summary": "Get books by genre ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Genre ID",
+                        "name": "genre_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/books.GetBooksResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid Genre ID",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "404": {
+                        "description": "Books Not Found",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/books/overdue": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Retrieve a list of overdue books",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Books"
+                ],
+                "summary": "Get overdue books",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/books.GetBooksResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/books/{id}": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Retrieve details of a book by its ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Books"
+                ],
+                "summary": "Get book by ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Book ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/books.GetBookByIdResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid Book ID",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "404": {
+                        "description": "Book Not Found",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Update details of an existing book by its ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Books"
+                ],
+                "summary": "Update book by ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Book ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Book Data",
+                        "name": "book",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/books.UpdateBookRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/books.UpdateBookResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid Data",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "404": {
+                        "description": "Book Not Found",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Remove a book from the library system by its ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Books"
+                ],
+                "summary": "Delete book by ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Book ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Book deleted successfully",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid Book ID",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "404": {
+                        "description": "Book Not Found",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/borrowers/": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Retrieve a list of all borrowers",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Borrowers"
+                ],
+                "summary": "Get all borrowers",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "name": "book_id",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "borrow_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "return_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "user_id",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Menu item found",
+                        "schema": {
+                            "$ref": "#/definitions/borrowers.GetAllBorrowersResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Add a new borrower to the library system",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Borrowers"
+                ],
+                "summary": "Create a new borrower",
+                "parameters": [
+                    {
+                        "description": "Borrower Data",
+                        "name": "borrower",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/borrowers.CreateBorrowerRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/borrowers.CreateBorrowerResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid Data",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/borrowers/users/{user_id}/borrowed_books": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Retrieve a list of books borrowed by a specific user",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Borrowers"
+                ],
+                "summary": "Get borrowed books by user ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "user_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/borrowers.GetAllBorrowersResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "User ID",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "404": {
+                        "description": "Borrower Not Found",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/borrowers/users/{user_id}/borrowing_history": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Retrieve borrowing history of a specific user",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Borrowers"
+                ],
+                "summary": "Get borrowing history by user ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "user_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/borrowers.GetBorrowingHistoryResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid User ID",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "404": {
+                        "description": "Borrowing History Not Found",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/borrowers/{id}": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Retrieve details of a borrower by their ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Borrowers"
+                ],
+                "summary": "Get borrower by ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Borrower ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/borrowers.GetBorrowerByIdResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Borrower ID",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "404": {
+                        "description": "Borrower Not Found",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Update details of an existing borrower by their ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Borrowers"
+                ],
+                "summary": "Update borrower by ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Borrower ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Borrower Data",
+                        "name": "borrower",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/borrowers.UpdateBorrowerRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/borrowers.UpdateBorrowerResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Borrower ID",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "404": {
+                        "description": "Borrower Not Found",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Remove a borrower from the library system by their ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Borrowers"
+                ],
+                "summary": "Delete borrower by ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Borrower ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Borrower deleted successfully",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "Borrower ID",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "404": {
+                        "description": "Borrower Not Found",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/genres/": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Retrieve a list of all genres",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Genres"
+                ],
+                "summary": "Get all genres",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/genres.GetGenresResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Add a new genre to the system",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Genres"
+                ],
+                "summary": "Create a new genre",
+                "parameters": [
+                    {
+                        "description": "Genre Data",
+                        "name": "genre",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/genres.CreateGenreRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/genres.CreateGenreResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid Data",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/genres/{genre_id}/books": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Retrieve a list of books belonging to a specific genre",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Genres"
+                ],
+                "summary": "Get books by genre ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Genre ID",
+                        "name": "genre_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/genres.GetGenreByIdResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Genre ID",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "404": {
+                        "description": "Genre Not Found for Genre",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/genres/{id}": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Retrieve details of a genre by its ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Genres"
+                ],
+                "summary": "Get genre by ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Genre Genre ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/genres.GetGenreByIdResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid ID",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "404": {
+                        "description": "Genre Not Found",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Update details of an existing genre by its ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Genres"
+                ],
+                "summary": "Update genre by ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Genre ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Genre Data",
+                        "name": "genre",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/genres.UpdateGenreRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/genres.UpdateGenreResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid Data",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "404": {
+                        "description": "Genre Not Found",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Remove a genre from the system by its ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Genres"
+                ],
+                "summary": "Delete genre by ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Genre ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Borrower deleted successfully",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid ID",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "404": {
+                        "description": "Genre Not Found",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "authors.Author": {
+            "type": "object",
+            "properties": {
+                "biography": {
+                    "type": "string"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "deleted_at": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
+                }
+            }
+        },
+        "authors.CreateAuthorRequest": {
+            "type": "object",
+            "properties": {
+                "biography": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "authors.CreateAuthorResponse": {
+            "type": "object",
+            "properties": {
+                "author": {
+                    "$ref": "#/definitions/authors.Author"
+                }
+            }
+        },
+        "authors.GetAuthorByIdResponse": {
+            "type": "object",
+            "properties": {
+                "author": {
+                    "$ref": "#/definitions/authors.Author"
+                }
+            }
+        },
+        "authors.GetAuthorsResponse": {
+            "type": "object",
+            "properties": {
+                "authors": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/authors.Author"
+                    }
+                }
+            }
+        },
+        "authors.UpdateAuthorRequest": {
+            "type": "object",
+            "properties": {
+                "biography": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "authors.UpdateAuthorResponse": {
+            "type": "object",
+            "properties": {
+                "author": {
+                    "$ref": "#/definitions/authors.Author"
+                }
+            }
+        },
+        "books.Book": {
+            "type": "object",
+            "properties": {
+                "author_id": {
+                    "type": "string"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "deleted_at": {
+                    "type": "string"
+                },
+                "genre_id": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "summary": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
+                }
+            }
+        },
+        "books.CreateBookRequest": {
+            "type": "object",
+            "properties": {
+                "author_id": {
+                    "type": "string"
+                },
+                "genre_id": {
+                    "type": "string"
+                },
+                "summary": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                }
+            }
+        },
+        "books.CreateBookResponse": {
+            "type": "object",
+            "properties": {
+                "book": {
+                    "$ref": "#/definitions/books.Book"
+                }
+            }
+        },
+        "books.GetBookByIdResponse": {
+            "type": "object",
+            "properties": {
+                "book": {
+                    "$ref": "#/definitions/books.Book"
+                }
+            }
+        },
+        "books.GetBooksResponse": {
+            "type": "object",
+            "properties": {
+                "books": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/books.Book"
+                    }
+                }
+            }
+        },
+        "books.UpdateBookRequest": {
+            "type": "object",
+            "properties": {
+                "author_id": {
+                    "type": "string"
+                },
+                "genre_id": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "summary": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                }
+            }
+        },
+        "books.UpdateBookResponse": {
+            "type": "object",
+            "properties": {
+                "book": {
+                    "$ref": "#/definitions/books.Book"
+                }
+            }
+        },
+        "borrowers.Borrower": {
+            "type": "object",
+            "properties": {
+                "book_id": {
+                    "type": "string"
+                },
+                "borrow_date": {
+                    "type": "string"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "return_date": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "borrowers.CreateBorrowerRequest": {
+            "type": "object",
+            "properties": {
+                "book_id": {
+                    "type": "string"
+                },
+                "borrow_date": {
+                    "type": "string"
+                },
+                "return_date": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "borrowers.CreateBorrowerResponse": {
+            "type": "object",
+            "properties": {
+                "borrower": {
+                    "$ref": "#/definitions/borrowers.Borrower"
+                }
+            }
+        },
+        "borrowers.GetAllBorrowersResponse": {
+            "type": "object",
+            "properties": {
+                "borrowers": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/borrowers.Borrower"
+                    }
+                }
+            }
+        },
+        "borrowers.GetBorrowerByIdResponse": {
+            "type": "object",
+            "properties": {
+                "borrower": {
+                    "$ref": "#/definitions/borrowers.Borrower"
+                }
+            }
+        },
+        "borrowers.GetBorrowingHistoryResponse": {
+            "type": "object",
+            "properties": {
+                "currently_borrowed": {
+                    "description": "Books currently borrowed by the user",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/borrowers.Borrower"
+                    }
+                },
+                "history": {
+                    "description": "Historical records of borrowed books",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/borrowers.Borrower"
+                    }
+                }
+            }
+        },
+        "borrowers.UpdateBorrowerRequest": {
+            "type": "object",
+            "properties": {
+                "book_id": {
+                    "type": "string"
+                },
+                "borrow_date": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "return_date": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "borrowers.UpdateBorrowerResponse": {
+            "type": "object",
+            "properties": {
+                "borrower": {
+                    "$ref": "#/definitions/borrowers.Borrower"
+                }
+            }
+        },
+        "genres.CreateGenreRequest": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "genres.CreateGenreResponse": {
+            "type": "object",
+            "properties": {
+                "genre": {
+                    "$ref": "#/definitions/genres.Genre"
+                }
+            }
+        },
+        "genres.Genre": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "type": "string"
+                },
+                "deleted_at": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
+                }
+            }
+        },
+        "genres.GetGenreByIdResponse": {
+            "type": "object",
+            "properties": {
+                "genre": {
+                    "$ref": "#/definitions/genres.Genre"
+                }
+            }
+        },
+        "genres.GetGenresResponse": {
+            "type": "object",
+            "properties": {
+                "genres": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/genres.Genre"
+                    }
+                }
+            }
+        },
+        "genres.UpdateGenreRequest": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "genres.UpdateGenreResponse": {
+            "type": "object",
+            "properties": {
+                "genre": {
+                    "$ref": "#/definitions/genres.Genre"
+                }
+            }
+        }
+    },
+    "securityDefinitions": {
+        "BearerAuth": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
+        }
+    }
+}

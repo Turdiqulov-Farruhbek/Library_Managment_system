@@ -1,0 +1,73 @@
+syntax = "proto3";
+
+option go_package = "/genproto/authors";
+
+package authors;
+
+// AuthorsService defines the author-related RPC services
+service AuthorsService {
+    rpc GetAuthors (GetAuthorsRequest) returns (GetAuthorsResponse);
+    rpc GetAuthorById (GetAuthorByIdRequest) returns (GetAuthorByIdResponse);
+    rpc CreateAuthor (CreateAuthorRequest) returns (CreateAuthorResponse);
+    rpc UpdateAuthor (UpdateAuthorRequest) returns (UpdateAuthorResponse);
+    rpc DeleteAuthor (DeleteAuthorRequest) returns (DeleteAuthorResponse);
+}
+
+// Author message represents the author entity
+message Author {
+    string id = 1;           
+    string name = 2;
+    string biography = 3;
+    string created_at = 4;   
+    string updated_at = 5;   
+    string deleted_at = 6;  
+}
+
+// Request and Response messages for getting authors
+message GetAuthorsRequest {
+    string name = 1;
+    string biography = 2;
+}
+
+message GetAuthorsResponse {
+    repeated Author authors = 1;
+}
+
+// Request and Response messages for getting an author by ID
+message GetAuthorByIdRequest {
+    string id = 1;           
+}
+
+message GetAuthorByIdResponse {
+    Author author = 1;
+}
+
+// Request and Response messages for creating an author
+message CreateAuthorRequest {
+    string name = 1;
+    string biography = 2;
+}
+
+message CreateAuthorResponse {
+    Author author = 1;
+}
+
+// Request and Response messages for updating an author
+message UpdateAuthorRequest {
+    string id = 1;           
+    string name = 2;
+    string biography = 3;
+}
+
+message UpdateAuthorResponse {
+    Author author = 1;
+}
+
+// Request and Response messages for deleting an author
+message DeleteAuthorRequest {
+    string id = 1;           
+}
+
+message DeleteAuthorResponse {
+    string message = 1;
+}

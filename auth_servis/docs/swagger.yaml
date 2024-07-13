@@ -1,0 +1,142 @@
+definitions:
+  models.LoginRes:
+    properties:
+      id:
+        type: string
+      username:
+        type: string
+    type: object
+  models.User:
+    properties:
+      created_at:
+        type: string
+      deleted_at:
+        type: integer
+      email:
+        type: string
+      id:
+        type: string
+      password:
+        type: string
+      updated_at:
+        type: string
+      username:
+        type: string
+    type: object
+  models.UserLogin:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+      username:
+        type: string
+    type: object
+  models.UserRegister:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+      username:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /login:
+    post:
+      consumes:
+      - application/json
+      description: Log in an existing user with the provided credentials
+      parameters:
+      - description: User data
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/models.UserLogin'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.LoginRes'
+        "400":
+          description: Bad request
+          schema:
+            type: string
+        "500":
+          description: Internal server error
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: Login user
+      tags:
+      - users
+  /register:
+    post:
+      consumes:
+      - application/json
+      description: Register a new user with the provided details
+      parameters:
+      - description: User data
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/models.UserRegister'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.LoginRes'
+        "400":
+          description: Bad request
+          schema:
+            type: string
+        "500":
+          description: Internal server error
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: Register new user
+      tags:
+      - users
+  /users/{username}:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve a user's details by their username
+      parameters:
+      - description: Username
+        in: path
+        name: username
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.User'
+        "400":
+          description: Bad request
+          schema:
+            type: string
+        "500":
+          description: Internal server error
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: Get user by username
+      tags:
+      - users
+swagger: "2.0"

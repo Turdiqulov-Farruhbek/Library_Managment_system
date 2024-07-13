@@ -1,0 +1,80 @@
+syntax = "proto3";
+
+option go_package = "/genproto/users";
+
+package users;
+
+// UsersService defines the user-related RPC services
+service UsersService {
+    rpc CreateUser (CreateUserRequest) returns (CreateUserResponse);
+    rpc GetUserById (GetUserByIdRequest) returns (GetUserByIdResponse);
+    rpc UpdateUser (UpdateUserRequest) returns (UpdateUserResponse);
+    rpc DeleteUser (DeleteUserRequest) returns (DeleteUserResponse);
+    rpc GetAllUsers (GetAllUsersRequest) returns (GetAllUsersResponse);
+}
+
+// User message represents a user entity
+message User {
+    string id = 1;
+    string username = 2;
+    string email = 3;
+    string password = 4;
+    string created_at = 5;
+    string updated_at = 6;
+    int64 deleted_at = 7;
+}
+
+// Request and Response messages for creating a user
+message CreateUserRequest {
+    string username = 1;
+    string email = 2;
+    string password = 3;
+}
+
+message CreateUserResponse {
+    User user = 1;
+}
+
+// Request and Response messages for getting a user by ID
+message GetUserByIdRequest {
+    string id = 1;
+}
+
+message GetUserByIdResponse {
+    User user = 1;
+}
+
+// Request and Response messages for updating a user
+message UpdateUserRequest {
+    string id = 1;
+    string username = 2;
+    string email = 3;
+    string password = 4;
+}
+
+message UpdateUserResponse {
+    User user = 1;
+}
+
+// Request and Response messages for deleting a user
+message DeleteUserRequest {
+    string id = 1;
+}
+
+message DeleteUserResponse {
+    string message = 1;
+}
+
+// Request and Response messages for getting all users
+message GetAllUsersRequest {
+    string username = 1;
+    string email = 2;
+    string password = 3;
+}
+    
+
+message GetAllUsersResponse {
+    repeated User users = 1;
+}
+
+

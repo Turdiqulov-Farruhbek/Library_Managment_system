@@ -1,0 +1,117 @@
+syntax = "proto3";
+
+option go_package = "/genproto/borrowers";
+
+package borrowers;
+
+// CRUD (Create, Read, Update, Delete) RPC methods for BorrowersService
+service BorrowersService {
+    rpc CreateBorrower (CreateBorrowerRequest) returns (CreateBorrowerResponse);
+    rpc GetBorrowerById (GetBorrowerByIdRequest) returns (GetBorrowerByIdResponse);
+    rpc UpdateBorrower (UpdateBorrowerRequest) returns (UpdateBorrowerResponse);
+    rpc DeleteBorrower (DeleteBorrowerRequest) returns (DeleteBorrowerResponse);
+    rpc GetAllBorrowers (GetAllBorrowersRequest) returns (GetAllBorrowersResponse);
+    rpc GetBorrowingHistory (GetBorrowingHistoryRequest) returns (GetBorrowingHistoryResponse);
+    rpc GetBorrowedBooksByUser (GetBorrowedBooksByUserRequest) returns (GetBorrowedBooksByUserResponse); // New method
+}
+
+// CreateBorrowerRequest message represents a create borrower request
+message CreateBorrowerRequest {
+    string user_id = 1;
+    string book_id = 2;
+    string borrow_date = 3;
+    string return_date = 4;
+}
+
+// CreateBorrowerResponse message represents a create borrower response
+message CreateBorrowerResponse {
+    Borrower borrower = 1;
+}
+
+// GetBorrowerByIdRequest message represents a get borrower by ID request
+message GetBorrowerByIdRequest {
+    string id = 1;
+}
+
+// GetBorrowerByIdResponse message represents a get borrower by ID response
+message GetBorrowerByIdResponse {
+    Borrower borrower = 1;
+}
+
+// UpdateBorrowerRequest message represents an update borrower request
+message UpdateBorrowerRequest {
+    string id = 1;
+    string user_id = 2;
+    string book_id = 3;
+    string borrow_date = 4;
+    string return_date = 5;
+}
+
+// UpdateBorrowerResponse message represents an update borrower response
+message UpdateBorrowerResponse {
+    Borrower borrower = 1;
+}
+
+// DeleteBorrowerRequest message represents a delete borrower request
+message DeleteBorrowerRequest {
+    string id = 1;
+}
+
+// DeleteBorrowerResponse message represents a delete borrower response
+message DeleteBorrowerResponse {
+    string message = 1;
+}
+
+// GetAllBorrowersRequest message represents a get all borrowers request
+message GetAllBorrowersRequest {
+    string user_id = 1;
+    string book_id = 2;
+    string borrow_date = 3;
+    string return_date = 4;
+}
+
+// Borrower message represents a borrower entity
+message Borrower {
+    string id = 1;
+    string user_id = 2;
+    string book_id = 3;
+    string borrow_date = 4;
+    string return_date = 5;
+    string created_at = 6;
+    string updated_at = 7;
+}
+
+// GetAllBorrowersResponse message represents a get all borrowers response
+message GetAllBorrowersResponse {
+    repeated Borrower borrowers = 1;
+}
+
+// GetBorrowingHistoryRequest message represents a get borrowing history request
+message GetBorrowingHistoryRequest {
+    string user_id = 1;
+}
+
+// GetBorrowingHistoryResponse message represents a get borrowing history response
+message GetBorrowingHistoryResponse {
+    repeated Borrower currently_borrowed = 1; // Books currently borrowed by the user
+    repeated Borrower history = 2;            // Historical records of borrowed books
+}
+
+// GetBorrowedBooksByUserRequest message represents a get borrowed books by user request
+message GetBorrowedBooksByUserRequest {
+    string user_id = 1;
+}
+
+message BorrowedBook{
+    string title = 1;
+    string author_id = 2;
+    string genre_id = 3;
+    string summary = 4;
+    string created_at = 6;
+    string updated_at = 7;
+}
+
+// GetBorrowedBooksByUserResponse message represents a get borrowed books by user response
+message GetBorrowedBooksByUserResponse {
+    repeated BorrowedBook Books = 1; 
+}

@@ -1,0 +1,60 @@
+version: '3.9'
+
+services:
+
+  # Migrate
+  migrate:
+    image: migrate/migrate
+    networks:
+      - GLhost
+    volumes:
+      - ./migrations:/migrations
+    command: [ "-path", "/migrations", "-database",  
+                "postgres://postgres:root@post-cont:5432/auth_db?sslmode=disable", 
+                "up" ]
+    depends_on:
+      - postgres-db
+
+  # Postgres Database
+  postgres-db:
+    container_name: post-cont
+    image: postgres:latest
+    environment:
+      PGUSER: postgres
+      POSTGRES_PASSWORD: root
+      # PGDATA: /data/postgres
+      POSTGRES_DB: auth_db
+    volumes:
+      - db:/post-database/post-memory
+    ports:
+      - "5433:5432"
+    networks:
+      - GLhost
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d postgres"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  # Auth Service
+  auth-service:
+    container_name: auth-service-cont
+    build: .
+    depends_on:
+      - postgres-db
+    ports:
+      - "2121:2121"
+    networks:
+      - GLhost
+
+# Docker Networks
+networks:
+  GLhost:
+    external: true
+    name: global-network
+    driver: bridge
+
+# Docker Volumes
+volumes:
+  db:

@@ -1,0 +1,90 @@
+syntax = "proto3";
+
+option go_package = "/genproto/genres"; 
+
+package genres; 
+
+
+// GenresService defines the genre-related RPC services
+service GenresService {
+    rpc GetGenres (GetGenresRequest) returns (GetGenresResponse);
+    rpc GetGenreById (GetGenreByIdRequest) returns (GetGenreByIdResponse);
+    rpc CreateGenre (CreateGenreRequest) returns (CreateGenreResponse);
+    rpc UpdateGenre (UpdateGenreRequest) returns (UpdateGenreResponse);
+    rpc DeleteGenre (DeleteGenreRequest) returns (DeleteGenreResponse);
+    rpc GetByGenreIdBooks(GetgenresByGenreIdRequest) returns (GetgenresResponse);
+}
+
+message Book {
+    string id = 1;
+    string title = 2;
+    string author_id = 3;
+    string genre_id = 4;
+    string summary = 5;
+    string created_at = 6;
+    string updated_at = 7;
+    string deleted_at = 8;
+}
+
+message GetgenresByGenreIdRequest{
+    string id = 1;
+}
+
+message GetgenresResponse{
+    repeated Book books = 1;
+}
+
+// Genre message represents the genre entity
+message Genre {
+    string id = 1;           
+    string name = 2;
+    string created_at = 3;   
+    string updated_at = 4;   
+    string deleted_at = 5;  
+}
+
+// Request and Response messages for getting genres
+message GetGenresRequest {
+    string name = 1;
+}
+
+message GetGenresResponse {
+    repeated Genre genres = 1;
+}
+
+// Request and Response messages for getting a genre by ID
+message GetGenreByIdRequest {
+    string id = 1;           
+}
+
+message GetGenreByIdResponse {
+    Genre genre = 1;
+}
+
+// Request and Response messages for creating a genre
+message CreateGenreRequest {
+    string name = 1;
+}
+
+message CreateGenreResponse {
+    Genre genre = 1;
+}
+
+// Request and Response messages for updating a genre
+message UpdateGenreRequest {
+    string id = 1;           
+    string name = 2;
+}
+
+message UpdateGenreResponse {
+    Genre genre = 1;
+}
+
+// Request and Response messages for deleting a genre
+message DeleteGenreRequest {
+    string id = 1;           
+}
+
+message DeleteGenreResponse {
+    string message = 1;
+}

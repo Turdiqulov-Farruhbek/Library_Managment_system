@@ -1,0 +1,59 @@
+version: '3.9'
+
+services:
+
+  migrate:
+    image: migrate/migrate
+    networks:
+      - GLhost
+    volumes:
+      - ./migrations:/migrations
+    command: [ "-path", "/migrations", "-database",  
+                "postgres://postgres:root@post:5432/library_db?sslmode=disable", 
+                "up" ]
+    depends_on:
+      - postgres-db
+
+  # Postgres Database
+  postgres-db:
+    container_name: post
+    image: postgres:latest
+    environment:
+      PGUSER: postgres
+      POSTGRES_PASSWORD: root
+      # PGDATA: /data/postgres
+      POSTGRES_DB: library_db
+    volumes:
+      - db:/post-database/post-memory
+    ports:
+      - "5434:5432"
+    networks:
+      - GLhost
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d postgres"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  # library-Service
+  library-service:
+    container_name: lib-service-cont
+    build: .
+    depends_on:
+      - postgres-db
+    ports:
+      - "50020:50020"
+    networks:
+      - GLhost
+
+# Docker Networks
+networks:
+  GLhost:
+    external: true
+    name: global-network
+    driver: bridge
+
+# Docker Volumes
+volumes:
+  db:

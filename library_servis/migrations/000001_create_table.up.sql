@@ -1,0 +1,56 @@
+CREATE TABLE Users (
+    id UUID PRIMARY KEY,
+    username VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    password VARCHAR(100) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    deleted_at BIGINT DEFAULT 0
+);
+
+
+CREATE TABLE Authors (
+    id UUID PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    biography TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    deleted_at BIGINT DEFAULT 0
+);
+
+
+CREATE TABLE Genres (
+    id UUID PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    deleted_at TIMESTAMP NULL
+);
+
+
+CREATE TABLE Books (
+    id UUID PRIMARY KEY,
+    title VARCHAR(100) NOT NULL,
+    author_id UUID NOT NULL REFERENCES authors(id),
+    genre_id UUID NOT NULL REFERENCES genres(id),
+    summary TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    deleted_at BIGINT DEFAULT 0
+    
+);
+
+CREATE TABLE Borrowers (
+    id UUID PRIMARY KEY,
+    user_id UUID NOT NULL,
+    book_id UUID NOT NULL,
+    borrow_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    return_date TIMESTAMP NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    deleted_at TIMESTAMP NULL,
+    FOREIGN KEY (user_id) REFERENCES Users(id),
+    FOREIGN KEY (book_id) REFERENCES Books(id)
+);
+
+

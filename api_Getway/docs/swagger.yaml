@@ -1,0 +1,1098 @@
+basePath: /
+definitions:
+  authors.Author:
+    properties:
+      biography:
+        type: string
+      created_at:
+        type: string
+      deleted_at:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  authors.CreateAuthorRequest:
+    properties:
+      biography:
+        type: string
+      name:
+        type: string
+    type: object
+  authors.CreateAuthorResponse:
+    properties:
+      author:
+        $ref: '#/definitions/authors.Author'
+    type: object
+  authors.GetAuthorByIdResponse:
+    properties:
+      author:
+        $ref: '#/definitions/authors.Author'
+    type: object
+  authors.GetAuthorsResponse:
+    properties:
+      authors:
+        items:
+          $ref: '#/definitions/authors.Author'
+        type: array
+    type: object
+  authors.UpdateAuthorRequest:
+    properties:
+      biography:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+    type: object
+  authors.UpdateAuthorResponse:
+    properties:
+      author:
+        $ref: '#/definitions/authors.Author'
+    type: object
+  books.Book:
+    properties:
+      author_id:
+        type: string
+      created_at:
+        type: string
+      deleted_at:
+        type: string
+      genre_id:
+        type: string
+      id:
+        type: string
+      summary:
+        type: string
+      title:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  books.CreateBookRequest:
+    properties:
+      author_id:
+        type: string
+      genre_id:
+        type: string
+      summary:
+        type: string
+      title:
+        type: string
+    type: object
+  books.CreateBookResponse:
+    properties:
+      book:
+        $ref: '#/definitions/books.Book'
+    type: object
+  books.GetBookByIdResponse:
+    properties:
+      book:
+        $ref: '#/definitions/books.Book'
+    type: object
+  books.GetBooksResponse:
+    properties:
+      books:
+        items:
+          $ref: '#/definitions/books.Book'
+        type: array
+    type: object
+  books.UpdateBookRequest:
+    properties:
+      author_id:
+        type: string
+      genre_id:
+        type: string
+      id:
+        type: string
+      summary:
+        type: string
+      title:
+        type: string
+    type: object
+  books.UpdateBookResponse:
+    properties:
+      book:
+        $ref: '#/definitions/books.Book'
+    type: object
+  borrowers.Borrower:
+    properties:
+      book_id:
+        type: string
+      borrow_date:
+        type: string
+      created_at:
+        type: string
+      id:
+        type: string
+      return_date:
+        type: string
+      updated_at:
+        type: string
+      user_id:
+        type: string
+    type: object
+  borrowers.CreateBorrowerRequest:
+    properties:
+      book_id:
+        type: string
+      borrow_date:
+        type: string
+      return_date:
+        type: string
+      user_id:
+        type: string
+    type: object
+  borrowers.CreateBorrowerResponse:
+    properties:
+      borrower:
+        $ref: '#/definitions/borrowers.Borrower'
+    type: object
+  borrowers.GetAllBorrowersResponse:
+    properties:
+      borrowers:
+        items:
+          $ref: '#/definitions/borrowers.Borrower'
+        type: array
+    type: object
+  borrowers.GetBorrowerByIdResponse:
+    properties:
+      borrower:
+        $ref: '#/definitions/borrowers.Borrower'
+    type: object
+  borrowers.GetBorrowingHistoryResponse:
+    properties:
+      currently_borrowed:
+        description: Books currently borrowed by the user
+        items:
+          $ref: '#/definitions/borrowers.Borrower'
+        type: array
+      history:
+        description: Historical records of borrowed books
+        items:
+          $ref: '#/definitions/borrowers.Borrower'
+        type: array
+    type: object
+  borrowers.UpdateBorrowerRequest:
+    properties:
+      book_id:
+        type: string
+      borrow_date:
+        type: string
+      id:
+        type: string
+      return_date:
+        type: string
+      user_id:
+        type: string
+    type: object
+  borrowers.UpdateBorrowerResponse:
+    properties:
+      borrower:
+        $ref: '#/definitions/borrowers.Borrower'
+    type: object
+  genres.CreateGenreRequest:
+    properties:
+      name:
+        type: string
+    type: object
+  genres.CreateGenreResponse:
+    properties:
+      genre:
+        $ref: '#/definitions/genres.Genre'
+    type: object
+  genres.Genre:
+    properties:
+      created_at:
+        type: string
+      deleted_at:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  genres.GetGenreByIdResponse:
+    properties:
+      genre:
+        $ref: '#/definitions/genres.Genre'
+    type: object
+  genres.GetGenresResponse:
+    properties:
+      genres:
+        items:
+          $ref: '#/definitions/genres.Genre'
+        type: array
+    type: object
+  genres.UpdateGenreRequest:
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+    type: object
+  genres.UpdateGenreResponse:
+    properties:
+      genre:
+        $ref: '#/definitions/genres.Genre'
+    type: object
+info:
+  contact: {}
+  description: API for managing Library Management System resources
+  title: Library Management System API
+  version: "1.0"
+paths:
+  /api/authors/:
+    get:
+      description: Retrieve a list of all authors
+      parameters:
+      - description: Author Name
+        in: query
+        name: name
+        type: string
+      - description: Author Biography
+        in: query
+        name: biography
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/authors.GetAuthorsResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
+      summary: Get all authors
+      tags:
+      - Authors
+    post:
+      consumes:
+      - application/json
+      description: Add a new author to the library system
+      parameters:
+      - description: Author Data
+        in: body
+        name: author
+        required: true
+        schema:
+          $ref: '#/definitions/authors.CreateAuthorRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/authors.CreateAuthorResponse'
+        "400":
+          description: Invalid Data
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
+      summary: Create a new author
+      tags:
+      - Authors
+  /api/authors/{id}:
+    delete:
+      description: Remove an author from the library system by their ID
+      parameters:
+      - description: Author ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Author deleted successfully
+          schema:
+            type: string
+        "400":
+          description: Invalid Author ID
+          schema:
+            type: string
+        "404":
+          description: Author Not Found
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
+      summary: Delete author by ID
+      tags:
+      - Authors
+    get:
+      description: Retrieve details of an author by their ID
+      parameters:
+      - description: Author ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/authors.GetAuthorByIdResponse'
+        "400":
+          description: Invalid Author ID
+          schema:
+            type: string
+        "404":
+          description: Author Not Found
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
+      summary: Get author by ID
+      tags:
+      - Authors
+    put:
+      consumes:
+      - application/json
+      description: Update details of an existing author by their ID
+      parameters:
+      - description: Author ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Author Data
+        in: body
+        name: author
+        required: true
+        schema:
+          $ref: '#/definitions/authors.UpdateAuthorRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/authors.UpdateAuthorResponse'
+        "400":
+          description: Invalid Author ID
+          schema:
+            type: string
+        "404":
+          description: Author Not Found
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
+      summary: Update author by ID
+      tags:
+      - Authors
+  /api/books/:
+    get:
+      description: Retrieve a list of all books
+      parameters:
+      - description: Book title
+        in: query
+        name: title
+        type: string
+      - description: Book author_id
+        in: query
+        name: author_id
+        type: string
+      - description: Book genre_id
+        in: query
+        name: genre_id
+        type: string
+      - description: Book summary
+        in: query
+        name: summary
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/books.GetBooksResponse'
+        "500":
+          description: Internal server error
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
+      summary: Get all books
+      tags:
+      - Books
+    post:
+      consumes:
+      - application/json
+      description: Add a new book to the library system
+      parameters:
+      - description: Book Data
+        in: body
+        name: book
+        required: true
+        schema:
+          $ref: '#/definitions/books.CreateBookRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/books.CreateBookResponse'
+        "400":
+          description: Invalid Data
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
+      summary: Create a new book
+      tags:
+      - Books
+  /api/books/{id}:
+    delete:
+      description: Remove a book from the library system by its ID
+      parameters:
+      - description: Book ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Book deleted successfully
+          schema:
+            type: string
+        "400":
+          description: Invalid Book ID
+          schema:
+            type: string
+        "404":
+          description: Book Not Found
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
+      summary: Delete book by ID
+      tags:
+      - Books
+    get:
+      description: Retrieve details of a book by its ID
+      parameters:
+      - description: Book ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/books.GetBookByIdResponse'
+        "400":
+          description: Invalid Book ID
+          schema:
+            type: string
+        "404":
+          description: Book Not Found
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
+      summary: Get book by ID
+      tags:
+      - Books
+    put:
+      consumes:
+      - application/json
+      description: Update details of an existing book by its ID
+      parameters:
+      - description: Book ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Book Data
+        in: body
+        name: book
+        required: true
+        schema:
+          $ref: '#/definitions/books.UpdateBookRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/books.UpdateBookResponse'
+        "400":
+          description: Invalid Data
+          schema:
+            type: string
+        "404":
+          description: Book Not Found
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
+      summary: Update book by ID
+      tags:
+      - Books
+  /api/books/authors/{author_id}/books:
+    get:
+      description: Retrieve a list of books by a specific author
+      parameters:
+      - description: Author ID
+        in: path
+        name: author_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/books.GetBooksResponse'
+        "400":
+          description: Invalid Author ID
+          schema:
+            type: string
+        "404":
+          description: Books Not Found
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
+      summary: Get books by author ID
+      tags:
+      - Books
+  /api/books/genres/{genre_id}/books:
+    get:
+      description: Retrieve a list of books by a specific genre
+      parameters:
+      - description: Genre ID
+        in: path
+        name: genre_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/books.GetBooksResponse'
+        "400":
+          description: Invalid Genre ID
+          schema:
+            type: string
+        "404":
+          description: Books Not Found
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
+      summary: Get books by genre ID
+      tags:
+      - Books
+  /api/books/overdue:
+    get:
+      description: Retrieve a list of overdue books
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/books.GetBooksResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
+      summary: Get overdue books
+      tags:
+      - Books
+  /api/borrowers/:
+    get:
+      description: Retrieve a list of all borrowers
+      parameters:
+      - in: query
+        name: book_id
+        type: string
+      - in: query
+        name: borrow_date
+        type: string
+      - in: query
+        name: return_date
+        type: string
+      - in: query
+        name: user_id
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Menu item found
+          schema:
+            $ref: '#/definitions/borrowers.GetAllBorrowersResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
+      summary: Get all borrowers
+      tags:
+      - Borrowers
+    post:
+      consumes:
+      - application/json
+      description: Add a new borrower to the library system
+      parameters:
+      - description: Borrower Data
+        in: body
+        name: borrower
+        required: true
+        schema:
+          $ref: '#/definitions/borrowers.CreateBorrowerRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/borrowers.CreateBorrowerResponse'
+        "400":
+          description: Invalid Data
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
+      summary: Create a new borrower
+      tags:
+      - Borrowers
+  /api/borrowers/{id}:
+    delete:
+      description: Remove a borrower from the library system by their ID
+      parameters:
+      - description: Borrower ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Borrower deleted successfully
+          schema:
+            type: string
+        "400":
+          description: Borrower ID
+          schema:
+            type: string
+        "404":
+          description: Borrower Not Found
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
+      summary: Delete borrower by ID
+      tags:
+      - Borrowers
+    get:
+      description: Retrieve details of a borrower by their ID
+      parameters:
+      - description: Borrower ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/borrowers.GetBorrowerByIdResponse'
+        "400":
+          description: Borrower ID
+          schema:
+            type: string
+        "404":
+          description: Borrower Not Found
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
+      summary: Get borrower by ID
+      tags:
+      - Borrowers
+    put:
+      consumes:
+      - application/json
+      description: Update details of an existing borrower by their ID
+      parameters:
+      - description: Borrower ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Borrower Data
+        in: body
+        name: borrower
+        required: true
+        schema:
+          $ref: '#/definitions/borrowers.UpdateBorrowerRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/borrowers.UpdateBorrowerResponse'
+        "400":
+          description: Borrower ID
+          schema:
+            type: string
+        "404":
+          description: Borrower Not Found
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
+      summary: Update borrower by ID
+      tags:
+      - Borrowers
+  /api/borrowers/users/{user_id}/borrowed_books:
+    get:
+      description: Retrieve a list of books borrowed by a specific user
+      parameters:
+      - description: User ID
+        in: path
+        name: user_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/borrowers.GetAllBorrowersResponse'
+        "400":
+          description: User ID
+          schema:
+            type: string
+        "404":
+          description: Borrower Not Found
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
+      summary: Get borrowed books by user ID
+      tags:
+      - Borrowers
+  /api/borrowers/users/{user_id}/borrowing_history:
+    get:
+      description: Retrieve borrowing history of a specific user
+      parameters:
+      - description: User ID
+        in: path
+        name: user_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/borrowers.GetBorrowingHistoryResponse'
+        "400":
+          description: Invalid User ID
+          schema:
+            type: string
+        "404":
+          description: Borrowing History Not Found
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
+      summary: Get borrowing history by user ID
+      tags:
+      - Borrowers
+  /api/genres/:
+    get:
+      description: Retrieve a list of all genres
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/genres.GetGenresResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
+      summary: Get all genres
+      tags:
+      - Genres
+    post:
+      consumes:
+      - application/json
+      description: Add a new genre to the system
+      parameters:
+      - description: Genre Data
+        in: body
+        name: genre
+        required: true
+        schema:
+          $ref: '#/definitions/genres.CreateGenreRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/genres.CreateGenreResponse'
+        "400":
+          description: Invalid Data
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
+      summary: Create a new genre
+      tags:
+      - Genres
+  /api/genres/{genre_id}/books:
+    get:
+      description: Retrieve a list of books belonging to a specific genre
+      parameters:
+      - description: Genre ID
+        in: path
+        name: genre_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/genres.GetGenreByIdResponse'
+        "400":
+          description: Genre ID
+          schema:
+            type: string
+        "404":
+          description: Genre Not Found for Genre
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
+      summary: Get books by genre ID
+      tags:
+      - Genres
+  /api/genres/{id}:
+    delete:
+      description: Remove a genre from the system by its ID
+      parameters:
+      - description: Genre ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Borrower deleted successfully
+          schema:
+            type: string
+        "400":
+          description: Invalid ID
+          schema:
+            type: string
+        "404":
+          description: Genre Not Found
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
+      summary: Delete genre by ID
+      tags:
+      - Genres
+    get:
+      description: Retrieve details of a genre by its ID
+      parameters:
+      - description: Genre Genre ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/genres.GetGenreByIdResponse'
+        "400":
+          description: Invalid ID
+          schema:
+            type: string
+        "404":
+          description: Genre Not Found
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
+      summary: Get genre by ID
+      tags:
+      - Genres
+    put:
+      consumes:
+      - application/json
+      description: Update details of an existing genre by its ID
+      parameters:
+      - description: Genre ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Genre Data
+        in: body
+        name: genre
+        required: true
+        schema:
+          $ref: '#/definitions/genres.UpdateGenreRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/genres.UpdateGenreResponse'
+        "400":
+          description: Invalid Data
+          schema:
+            type: string
+        "404":
+          description: Genre Not Found
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
+      summary: Update genre by ID
+      tags:
+      - Genres
+securityDefinitions:
+  BearerAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

@@ -1,0 +1,102 @@
+syntax = "proto3";
+
+option go_package = "/genproto/books";
+
+package books;
+
+// BooksService defines the book-related RPC services
+service BooksService {
+    rpc GetBooks (GetBooksRequest) returns (GetBooksResponse);
+    rpc GetBookById (GetBookByIdRequest) returns (GetBookByIdResponse);
+    rpc CreateBook (CreateBookRequest) returns (CreateBookResponse);
+    rpc UpdateBook (UpdateBookRequest) returns (UpdateBookResponse);
+    rpc DeleteBook (DeleteBookRequest) returns (DeleteBookResponse);
+    rpc GetBooksByAuthorId (GetBooksByAuthorIdRequest) returns (GetBooksResponse);
+    rpc GetBooksByGenreId (GetBooksByGenreIdRequest) returns (GetBooksResponse);
+    rpc GetOverdueBooks (GetOverdueBooksRequest) returns (GetBooksResponse);
+    rpc SearchBooks (SearchBooksRequest) returns (GetBooksResponse); // New method
+}
+
+// Book message represents a book entity
+message Book {
+    string id = 1;
+    string title = 2;
+    string user_id = 9;
+    string author_id = 3;
+    string genre_id = 4;
+    string summary = 5;
+    string created_at = 6;
+    string updated_at = 7;
+    string deleted_at = 8;
+}
+
+// Request and Response messages for getting books
+message GetBooksRequest {
+    string title = 1;
+    string author_id = 2;
+    string genre_id = 3;
+    string summary = 4;
+}
+
+message GetBooksByAuthorIdRequest{
+    string id = 1;
+}
+
+message GetBooksByGenreIdRequest{
+    string id = 1;
+}
+
+message GetOverdueBooksRequest{}
+
+message GetBooksResponse {
+    repeated Book books = 1;
+}
+
+// Request and Response messages for getting a book by ID
+message GetBookByIdRequest {
+    string id = 1;
+}
+
+message GetBookByIdResponse {
+    Book book = 1;
+}
+
+// Request and Response messages for creating a book
+message CreateBookRequest {
+    string title = 1;
+    string author_id = 2;
+    string genre_id = 3;
+    string summary = 4;
+}
+
+message CreateBookResponse {
+    Book book = 1;
+}
+
+// Request and Response messages for updating a book
+message UpdateBookRequest {
+    string id = 1;
+    string title = 2;
+    string author_id = 3;
+    string genre_id = 4;
+    string summary = 5;
+}
+
+message UpdateBookResponse {
+    Book book = 1;
+}
+
+// Request and Response messages for deleting a book
+message DeleteBookRequest {
+    string id = 1;
+}
+
+message DeleteBookResponse {
+    string message = 1;
+}
+
+// Request message for searching books
+message SearchBooksRequest {
+    string title = 1;
+    string author = 2;
+}
