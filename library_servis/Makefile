@@ -28,6 +28,9 @@ gen-protoAll:
 	--go-grpc_out=./ \
 	protos/*.proto
 
+swag-gen:
+	~/go/bin/swag init -g ./api/api.go -o docs force 1
+
 
 doc-run:
 	docker run --network="host" --name libCont lib_service

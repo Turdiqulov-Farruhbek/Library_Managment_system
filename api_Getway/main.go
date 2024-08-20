@@ -21,7 +21,7 @@ func main() {
 	router := api.NewGin(libraryConn)
 	// fmt.Println("API Gateway running on http://localhost:50020")
 	if err := router.Run(":8000"); err != nil {
-		slog.Error("Failed to connect to gin engine: %v", err)
+		slog.Error("Failed to connect to gin engine: %v", "ERRORA", err)
 	}
 
 }
